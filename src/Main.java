@@ -160,6 +160,81 @@ public class Main {
         updateBoardState(board, i,j, 2 );
     }
 
+    public static int [][] winningStrategy(int [][] board, int iteration){
+        //cases that computer begins first
+
+        if(iteration>2){
+            int [][] firstVersion = arrayCopy(board);
+            board = blockOrWin(board,2);
+
+            if(!isEqual(firstVersion,board)){
+                //nextRound user plays.
+                return board;
+            }
+            board = blockOrWin(board, 1);
+            if(!isEqual(firstVersion,board)){
+                return board;
+            }
+        }
+
+        if (iteration==0){
+            return updateBoardState(board, 1,1, 2);
+        }
+        if(iteration==2){
+            if(board[1][1]==1){
+                return updateBoardState(board, 3,3, 2);
+            }
+            else{
+                if(board[1][0]==0 && board[2][0]==0){
+                    return updateBoardState(board, 3,1, 2);
+                }
+                else if(board[0][2]==0 && board[1][1]==0){
+                    return updateBoardState(board, 2,2, 2);
+                }
+            }
+        }
+        if(iteration==4){//trap turn
+            if(board[1][1]==1){
+                if(board[2][0]==0){return updateBoardState(board, 3,1, 2);}
+                else if(board[0][2]==0){
+                    return updateBoardState(board, 1,3, 2);
+                }
+            }
+            else{
+                if(board[2][0]==1 && board[0][2]==0){
+                    return updateBoardState(board, 1,3, 2);
+                }
+                else if(board[2][0]==0 && board[0][2]==1){
+                    return updateBoardState(board, 3,1, 2);
+                }
+                else{randomMove(board);}
+            }
+        }
+        //cases that user begins first;
+        if(iteration==1){
+            if(board[0][0]==1 || board[2][2]==1 || board[2][0]==1 || board[0][2]==1){
+                return updateBoardState(board, 2,2, 2);
+            }
+            else if(board[1][1]==1){
+                return updateBoardState(board, 1,1, 2);
+            }
+        }
+        if(iteration==3){
+            if(board[1][1]==2){
+                if((board[0][0]==1 && board[2][2]==1) || (board[0][2]==1 && board[2][0]==1)){
+                    return updateBoardState(board, 1,2, 2);
+                }
+            }
+            else if(board[0][0]==1 && board[2][2]==1){
+                return updateBoardState(board, 3,1, 2);
+            }
+            else{randomMove(board);}
+        }
+
+        randomMove(board);
+        return board;
+    }
+
 
     public static boolean isEqual(int [][]board1, int [][]board2){
 
@@ -309,13 +384,13 @@ public class Main {
 
     public static void main(String[] args) {
 //
-//        System.out.println("Welcome to TicTacToe!");
-//        System.out.println("The first player is computer, you can play first in the next round.");
-//        System.out.println("To make your move, you can state the cell name you want to go by writing the coordination of the cell that you see in the board state. Please enter the coordinations with a dash.");
-//        System.out.println("For example: the top left corner has the coordinations of row 1 and column 1, therefore you should input 1-1 (for middle cell 2-2 and so on...)");
-//        System.out.println("You cannot change a cell that is already filled before, you can only make your moves to empty cells.");
-//        System.out.println("After each move of any of the players, you can see the updated state of the board");
-//        System.out.println("Now press p if you want to start the game");
+        System.out.println("Welcome to TicTacToe!");
+        System.out.println("The first player is computer, you can play first in the next round.");
+        System.out.println("To make your move, you can state the cell name you want to go by writing the coordination of the cell that you see in the board state. Please enter the coordinations with a dash.");
+        System.out.println("For example: the top left corner has the coordinations of row 1 and column 1, therefore you should input 1-1 (for middle cell 2-2 and so on...)");
+        System.out.println("You cannot change a cell that is already filled before, you can only make your moves to empty cells.");
+        System.out.println("After each move of any of the players, you can see the updated state of the board");
+        System.out.println("Now press p if you want to start the game");
 
 //        tests();
 
@@ -327,21 +402,15 @@ public class Main {
         if(play.equalsIgnoreCase("p")) {
             while (true) {
                 System.out.println("A new round!");
+                int iteration=0;
                 int[][] board = initializeTheBoard();
                 printGameState(board);
                 int winner = -1;
                 int i = rounds % 2;
                 while (winner == -1) {
                     if (i % 2 == 0) {
-                        int [][] boardBefore = arrayCopy(board);
-                        if(isEqual(blockOrWin(board,2),boardBefore)){
-                            if(isEqual(blockOrWin(board,1),boardBefore)){
-                                randomMove(board);
-                            }
-                        }
-//                        randomMove(board);
-                        i++;
-                        printGameState(board);
+                        winningStrategy(board,iteration);
+//
                     }
                     else if (i % 2 == 1) {
                         int [][] boardBefore=arrayCopy(board);
@@ -352,9 +421,11 @@ public class Main {
                             int player_j = Integer.parseInt(play.split("-")[1]);
                             board = updateBoardState(board, player_i, player_j, 1);
                         }
-                        printGameState(board);
-                        i++;
+//
                     }
+                    printGameState(board);
+                    i++;
+                    iteration++;
                     winner = winnerDecider(board); }
 
                 if (winner == 2) {
