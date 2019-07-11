@@ -383,23 +383,21 @@ public class Main {
 
 
     public static void main(String[] args) {
-//
+//        tests();
         System.out.println("Welcome to TicTacToe!");
         System.out.println("The first player is computer, you can play first in the next round.");
         System.out.println("To make your move, you can state the cell name you want to go by writing the coordination of the cell that you see in the board state. Please enter the coordinations with a dash.");
         System.out.println("For example: the top left corner has the coordinations of row 1 and column 1, therefore you should input 1-1 (for middle cell 2-2 and so on...)");
         System.out.println("You cannot change a cell that is already filled before, you can only make your moves to empty cells.");
         System.out.println("After each move of any of the players, you can see the updated state of the board");
-        System.out.println("Now press p if you want to start the game");
-
-//        tests();
+        System.out.println("Now press 'e' if you want to play on an easier mode or 'h' to play on a harder mode!");
 
 
         int rounds=0;
         Scanner scanner = new Scanner(System.in);
-        String play="n";
+        String play="e";
         play = scanner.nextLine();
-        if(play.equalsIgnoreCase("p")) {
+        if(play.equalsIgnoreCase("e") || play.equalsIgnoreCase("h") ) {
             while (true) {
                 System.out.println("A new round!");
                 int iteration=0;
@@ -409,8 +407,17 @@ public class Main {
                 int i = rounds % 2;
                 while (winner == -1) {
                     if (i % 2 == 0) {
-                        winningStrategy(board,iteration);
-//
+                        if(play.equalsIgnoreCase("h")){
+                            winningStrategy(board,iteration);
+                        }
+                        else{
+                            int[][] beforeBoard=arrayCopy(board);
+                            if(isEqual(blockOrWin(board,2),beforeBoard));{
+                                if(isEqual(blockOrWin(board,1),beforeBoard)){
+                                    randomMove(board);
+                                }
+                            }
+                        }
                     }
                     else if (i % 2 == 1) {
                         int [][] boardBefore=arrayCopy(board);
