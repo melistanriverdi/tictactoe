@@ -141,6 +141,26 @@ public class Main {
 
     }
 
+    public static void randomMove(int [][] board){
+        ArrayList<Integer>  emptyPlaces = new ArrayList<Integer>();
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                if(board[i][j]==0){
+                    int num=i*10+j;
+                    emptyPlaces.add(num);
+                }
+            }
+        }
+
+        Random random = new Random();
+        int indexes = random.nextInt(emptyPlaces.size());
+        int num = emptyPlaces.get(indexes);
+        int i=num/10 +1;
+        int j=num%10 +1;
+        updateBoardState(board, i,j, 2 );
+    }
+
+
     public static boolean isEqual(int [][]board1, int [][]board2){
 
         for(int i=0; i<3; i++){
@@ -246,6 +266,15 @@ public class Main {
            printGameState(blockOrWin(boardBlock, 1));
            System.out.println("cannot WIN successfully!");
        }
+       System.out.println("BEFORE random move:");
+       printGameState(board1);
+        System.out.println("AFTER random move:");
+       randomMove(board1);
+        printGameState(board1);
+        System.out.println("random move2:");
+        randomMove(board1);
+        printGameState(board1);
+
 
     }
 
