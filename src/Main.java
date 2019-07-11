@@ -317,7 +317,60 @@ public class Main {
 //        System.out.println("After each move of any of the players, you can see the updated state of the board");
 //        System.out.println("Now press p if you want to start the game");
 
-        tests();
+//        tests();
+
+
+        int rounds=0;
+        Scanner scanner = new Scanner(System.in);
+        String play="n";
+        play = scanner.nextLine();
+        if(play.equalsIgnoreCase("p")) {
+            while (true) {
+                System.out.println("A new round!");
+                int[][] board = initializeTheBoard();
+                printGameState(board);
+                int winner = -1;
+                int i = rounds % 2;
+                while (winner == -1) {
+                    if (i % 2 == 0) {
+                        int [][] boardBefore = arrayCopy(board);
+                        if(isEqual(blockOrWin(board,2),boardBefore)){
+                            if(isEqual(blockOrWin(board,1),boardBefore)){
+                                randomMove(board);
+                            }
+                        }
+//                        randomMove(board);
+                        i++;
+                        printGameState(board);
+                    }
+                    else if (i % 2 == 1) {
+                        int [][] boardBefore=arrayCopy(board);
+                        while(isEqual(board,boardBefore)){
+                            System.out.println("Now it's your turn to play:");
+                            play = scanner.nextLine();
+                            int player_i = Integer.parseInt(play.split("-")[0]);
+                            int player_j = Integer.parseInt(play.split("-")[1]);
+                            board = updateBoardState(board, player_i, player_j, 1);
+                        }
+                        printGameState(board);
+                        i++;
+                    }
+                    winner = winnerDecider(board); }
+
+                if (winner == 2) {
+                    System.out.println("--------The X has WON the game!--------");
+                }
+                else if (winner == 1) {
+                    System.out.println("--------The O has WON the game!--------");
+                }
+                else if (winner == 0) {
+                    System.out.println("--------It's a DRAW!--------");
+                }
+                rounds++;
+
+            }
+        }
+
 
     }
 }
