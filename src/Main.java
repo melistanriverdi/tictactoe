@@ -122,20 +122,23 @@ public class Main {
         return board;
     }
 
-    public static int [][] updateBoardState(int [][]board, int i, int j, int playersNumberCorrespondance){
-      if(i>3 || i<1 || j>3 || j<1){
-          System.out.println("Invalid grid values i: "+i+ " j:"+j);
+    public static int [][] updateBoardState(int [][]board, int row, int column, int playersNumberCorrespondance){
+      if(row>3 || row<1 || column>3 || column<1){
+          System.out.println("Invalid grid values i: "+row+ " j:"+column);
       }
-      else if(board[i-1][j-1]!=0){
-          System.out.println("You can only enter values into squares are empy!");
-      }
-      else{
-          if(board[i-1][j-1]!=0){
-              System.out.println("You cannot change the values of the grids, you can only play the empty fields, the given grid number is invalid!");
+      else {
+          int row_index = row - 1;
+          if(board[row_index][column-1]!=0){
+              System.out.println("You can only enter values into squares are empy!");
           }
           else{
-               board[i-1][j-1]=playersNumberCorrespondance;
+              if(board[row_index][column-1]!=0){
+                  System.out.println("You cannot change the values of the grids, you can only play the empty fields, the given grid number is invalid!");
               }
+              else{
+                   board[row_index][column-1]=playersNumberCorrespondance;
+                  }
+          }
       }
         return board;
 
@@ -256,6 +259,11 @@ public class Main {
             }
         }
         return copy;
+    }
+
+    public static void testWinnerDecider(){
+
+
     }
 
 
