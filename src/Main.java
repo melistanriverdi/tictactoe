@@ -298,6 +298,20 @@ public class Main {
                 { 1, 0, 0, 0}
         };
 
+        int[][] boardWonXFourbyFour = new int[][]{
+                { 1, 2, 1, 2},
+                { 2, 1, 2, 1},
+                { 1, 2, 2, 0},
+                { 2, 0, 0, 0}
+        };
+
+        int[][] boardWonOFourbyFour = new int[][]{
+                { 1, 1, 1, 1},
+                { 2, 1, 2, 0},
+                { 0, 1, 2, 0},
+                { 0, 1, 2, 1}
+        };
+
         if(winnerDecider((boardWonX))== GAMESTATES.X)
         {
             System.out.println("winnerDecider function can identify when X wins");
@@ -308,7 +322,7 @@ public class Main {
 
         if(winnerDecider((boardWonO))==GAMESTATES.O)
         {
-            System.out.println("function can identify when O wins");
+            System.out.println("winnerDeciderfunction can identify when O wins");
         }
         else{
             System.out.println("winnerDecider function CANNOT identify when O wins");
@@ -316,7 +330,7 @@ public class Main {
 
         if(winnerDecider((boardDraw))==GAMESTATES.DRAW)
         {
-            System.out.println("function can identify when it is a draw");
+            System.out.println("winnerDecider function can identify when it is a draw");
         }
         else{
             System.out.println("winnerDecider function CANNOT identify when it is adraw");
@@ -324,12 +338,26 @@ public class Main {
 
         if(winnerDecider((boardIncomplete))==GAMESTATES.INCOMPLETE)
         {
-            System.out.println("function can identify when the game is not complete yet");
+            System.out.println("winnerDecider function can identify when the game is not complete yet");
         }
         else{
             System.out.println("winnerDecider function CANNOT identify when the game is incomplete");
         }
 
+        if(winnerDecider((boardWonXFourbyFour))==GAMESTATES.X)
+        {
+            System.out.println("winnerDecider function can identify when X wins in 4 by 4 board");
+        }
+        else{
+            System.out.println("winnerDecider function CANNOT identify when X wins in 4 by 4 board");
+        }
+        if(winnerDecider((boardWonOFourbyFour))==GAMESTATES.O)
+        {
+            System.out.println("winnerDecider function can identify when O wins in 4 by 4 board");
+        }
+        else{
+            System.out.println("winnerDecider function CANNOT identify when O wins in 4 by 4 board");
+        }
     }
 
 
