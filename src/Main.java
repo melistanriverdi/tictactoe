@@ -262,7 +262,48 @@ public class Main {
     }
 
     public static void testWinnerDecider(){
+        int[][] boardWonX = new int[][]{
+                { 1, 0, 0},
+                { 2, 2, 2},
+                { 0, 1, 2}
+        };
 
+        int[][] boardWonO = new int[][]{
+                { 1, 1, 1},
+                { 2, 1, 2},
+                { 0, 1, 2}
+        };
+
+        int[][] boardDraw = new int[][]{
+                { 1, 2, 1, 1},
+                { 2, 1, 2, 1},
+                { 2, 1, 2, 2},
+                { 1, 2, 1, 2}
+        };
+
+        int[][] boardIncomplete = new int[][]{
+                { 1, 2, 1, 0},
+                { 2, 1, 2, 1},
+                { 0, 1, 2, 0},
+                { 1, 0, 0, 0}
+        };
+
+        if(winnerDecider((boardWonX))=="X")
+        {
+            System.out.println("function can identify when X wins");
+        }
+        if(winnerDecider((boardWonO))=="O")
+        {
+            System.out.println("function can identify when O wins");
+        }
+        if(winnerDecider((boardDraw))=="draw")
+        {
+            System.out.println("function can identify when it is a draw");
+        }
+        if(winnerDecider((boardIncomplete))=="incomplete")
+        {
+            System.out.println("function can identify when the game is not complete yet");
+        }
 
     }
 
