@@ -20,21 +20,20 @@ public class Main {
     }
 
     public static GAMESTATES winnerDecider(int[][] board){
-        //returning 2 means 2 has won, returning 1 means 1 has won, returning 0 means draw, -1 means not complete
-
+        int x_won = (int) Math.pow(2, board.length);
+        int o_won = 1;
+        int incomplete=0;
         HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
-        map.put(8,false); //means 2=X has won
-        map.put(4,false); //draw
-        map.put(2,false); //draw
-        map.put(1,false); //means 1=O has won
-        map.put(0,false); //means there are still empty rows
+        map.put(x_won,false); //means 2=X has won
+        map.put(o_won,false); //means 1=O has won
+        map.put(incomplete,false); //means there are still empty rows
 
         int mult1=1;
         int mult2=1;
 
         //adding multiplications by rows and columns
-        for(int i=0; i<3; i++){
-            for(int j=0; j<3; j++){
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board.length; j++){
                 mult1*=board[i][j];
                 mult2*=board[j][i];
             }
@@ -45,14 +44,19 @@ public class Main {
             mult2=1;
 
         }
-
+        int diagonal1=1;
+        int diagonal2=1;
         //adding the diagonals
-        map.put(board[0][0]*board[1][1]*board[2][2], true);
-        map.put(board[2][0]*board[1][1]*board[0][2], true);
+        for(int i=0; i<board.length; i++){
+            diagonal1=diagonal1*board[i][i];
+            diagonal2=diagonal2*board[board.length-1-i][i];
+        }
+        map.put(diagonal1, true);
+        map.put(diagonal2, true);
 
-        if(map.get(8)){return GAMESTATES.X;}
-        else if(map.get(1)){return GAMESTATES.O;}
-        else if(map.get(0)){return GAMESTATES.INCOMPLETE;}
+        if(map.get(x_won)){return GAMESTATES.X;}
+        else if(map.get(o_won)){return GAMESTATES.O;}
+        else if(map.get(incomplete)){return GAMESTATES.INCOMPLETE;}
         else{return GAMESTATES.DRAW;}
     }
 
